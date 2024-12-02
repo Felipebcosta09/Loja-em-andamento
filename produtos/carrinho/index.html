@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Carrinho</title>
+    <style>
+        .coupon-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .coupon-container input {
+            margin-right: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        .coupon-container button {
+            padding: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .discount-info {
+            margin-left: 10px;
+            background-color: #e0ffe0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .discount-info span {
+            margin-right: 10px;
+        }
+
+        .remove-coupon {
+            cursor: pointer;
+            color: red;
+            font-size: 18px;
+        }
+
+        .coupon-message {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .info {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Carrinho</h1>
+    </header>
+
+    <main class="cart-items">
+        <button id="btn-clear" class="btn-clear" onclick="clearCart()">Limpar Carrinho</button>
+        <ul id="cart-list"></ul>
+        <p id="total-price">Total: R$ 0.00</p>
+
+        <!-- Campo para inserir o cupom -->
+        <div class="coupon-container">
+            <input type="text" id="coupon-code" placeholder="Digite o cupom" />
+            <button id="apply-coupon" onclick="applyCoupon()">Aplicar Cupom</button>
+            <!-- Exibição do desconto aplicado -->
+            <div id="discount-info" class="discount-info" style="display: none;">
+                <span id="discount-text"></span>
+                <span id="remove-coupon" class="remove-coupon" onclick="removeCoupon()">X</span>
+            </div>
+        </div>
+
+        <p id="coupon-message"></p> <!-- Mensagem de feedback do cupom -->
+
+        <!-- Botões de Ação -->
+        <button id="btn-checkout" class="btn-checkout" onclick="goToPayment()">Ir para o pagamento</button>
+    </main>
+
+    <script>
+        // Função para exibir os produtos no carrinho
+        function displayCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || []; // Recupera os itens do carrinho
+            const cartList = document.getElementById('cart-list');
+            const totalPrice = document.getElementById('total-price');
+            
+            cartList.innerHTML = ''; // Limpa a lista do carrinho
+            let total = 0;
+
+            // Exibe os itens no carrinho
+            cart.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('cart-item');
+                listItem.id = `cart-item-${item.id}`; // Atribui um ID único para cada item no carrinho
+
+                // Verificando o caminho da imagem
+                if (!item.image) {
+                    item.image = 'default-image.jpg'; // Coloca uma imagem padrão se não houver imagem
+                }
+
+                // Criação da estrutura do item no carrinho
+                listItem.innerHTML = ` 
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <h2 class="cart-item-name">${item.name}</h2>
+                        <p class="cart-item-price">R$ ${item.price}</p>
+                    </div>
+                `;
+
+                cartList.appendChild(listItem);
+                total += parseFloat(item.price);
+            });
+
+            // Verificando se há um preço com desconto armazenado
+            const discountedTotal = parseFloat(localStorage.getItem('discountedTotal')) || 0;
+
+            // Exibe o preço total
+            if (discountedTotal > 0) {
+                total = discountedTotal;
+            }
+
+            totalPrice.textContent = `Total: R$ ${total.toFixed(2)}`;
+        }
+
+        // Função para limpar o carrinho
+        function clearCart() {
+            localStorage.removeItem('cart'); // Limpa o carrinho do localStorage
+            localStorage.removeItem('discountedTotal'); // Limpa o total com desconto
+            localStorage.removeItem('originalTotal'); // Limpa o total original
+            displayCart(); // Atualiza a tela do carrinho
+        }
+
+        // Função para redirecionar para a página de pagamento
+        function goToPayment() {
+            window.location.href = "pagamentos/pagamentos.html";  // Caminho relativo para a nova página
+        }
+
+        // Função para aplicar o cupom
+        function applyCoupon() {
+            // Verifica se já existe um desconto aplicado
+            if (localStorage.getItem('discountedTotal')) {
+                document.getElementById('coupon-message').textContent = "O cupom já foi aplicado!";
+                document.getElementById('coupon-message').classList.remove('success', 'error');
+                document.getElementById('coupon-message').classList.add('info');
+                return; // Impede que o cupom seja aplicado novamente
+            }
+
+            const couponCode = document.getElementById('coupon-code').value.toUpperCase().trim();
+            const couponMessage = document.getElementById('coupon-message');
+            const totalPrice = document.getElementById('total-price');
+            let total = parseFloat(totalPrice.textContent.replace('Total: R$ ', '').replace(',', '.')) || 0;
+
+            // Salva o valor original antes de aplicar o desconto
+            if (!localStorage.getItem('originalTotal')) {
+                localStorage.setItem('originalTotal', total.toFixed(2)); // Salva o valor original
+            }
+
+            // Definindo os cupons válidos
+            const coupons = {
+                "15": ["CUPOM15"],
+                "30": ["CUPOM30"],
+                "45": ["CUPOM45"]
+            };
+
+            // Verifica o cupom inserido
+            let discount = 0;
+            if (coupons["15"].includes(couponCode)) {
+                discount = 15;
+                couponMessage.textContent = "Você ganhou 15% de desconto!";
+                couponMessage.classList.remove('error');
+                couponMessage.classList.add('success');
+            } else if (coupons["30"].includes(couponCode)) {
+                discount = 30;
+                couponMessage.textContent = "Você ganhou 30% de desconto!";
+                couponMessage.classList.remove('error');
+                couponMessage.classList.add('success');
+            } else if (coupons["45"].includes(couponCode)) {
+                discount = 45;
+                couponMessage.textContent = "Você ganhou 45% de desconto!";
+                couponMessage.classList.remove('error');
+                couponMessage.classList.add('success');
+            } else {
+                couponMessage.textContent = "Cupom inválido!";
+                couponMessage.classList.remove('success');
+                couponMessage.classList.add('error');
+                return;
+            }
+
+            // Calcula o novo preço com desconto
+            const newTotal = total - (total * discount / 100);
+            totalPrice.textContent = `Total: R$ ${newTotal.toFixed(2).replace('.', ',')}`;
+            localStorage.setItem('discountedTotal', newTotal.toFixed(2)); // Salva o total com desconto
+
+            // Exibe o desconto aplicado ao lado do cupom
+            const discountInfo = document.getElementById('discount-info');
+            discountInfo.style.display = 'flex';
+            document.getElementById('discount-text').textContent = `Desconto de ${discount}%`;
+        }
+
+        // Função para remover o cupom
+        function removeCoupon() {
+            // Restaura o preço original
+            const originalTotal = localStorage.getItem('originalTotal');
+            const totalPrice = document.getElementById('total-price');
+            totalPrice.textContent = `Total: R$ ${originalTotal.replace('.', ',')}`;
+
+            // Limpa o desconto e o cupom
+            localStorage.removeItem('discountedTotal');
+            document.getElementById('discount-info').style.display = 'none';
+            document.getElementById('coupon-message').textContent = '';
+        }
+
+        // Chama a função de exibição do carrinho quando a página carrega
+        window.onload = displayCart;
+    </script>
+</body>
+</html>

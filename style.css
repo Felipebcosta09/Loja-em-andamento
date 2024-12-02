@@ -1,0 +1,627 @@
+/* ESTILO GERAL */
+* {
+    margin: 0; /* Remove as margens de todos os elementos */
+    padding: 0; /* Remove o preenchimento de todos os elementos */
+    box-sizing: border-box; /* Faz com que o padding e a borda sejam incluídos nas dimensões do elemento */
+    font-family: 'Poppins', sans-serif; /* Define a fonte 'Poppins' para todos os elementos */
+
+ /* Estilo Geral - Menu Desktop */
+.menu-desktop {
+    display: flex;  /* Exibe o menu em telas grandes */
+    list-style: none;
+}
+
+.menu-desktop ul {
+    display: flex;
+    gap: 20px; /* Ajuste o espaçamento entre os itens */
+}
+
+.menu-desktop li {
+    list-style: none;
+}
+
+.menu-desktop a {
+    text-decoration: none;
+    color: rgb(255, 255, 255); /* Cor do texto */
+}
+
+/* Botão do Menu Hamburguer - Inicialmente escondido */
+#btn-menu {
+    display: none; /* Escondido em telas grandes */
+}
+
+.menu-mobile {
+    display: none;  /* Escondido por padrão */
+}
+
+.overlay-menu {
+    display: none; /* Escondido por padrão */
+}
+
+/* Responsividade - Ajustes para telas pequenas (máximo 768px) */
+@media screen and (max-width: 768px) {
+
+    /* Esconde o menu desktop em telas pequenas */
+    .menu-desktop {
+        display: none; /* Menu desktop desaparece */
+    }
+
+    /* Exibe o botão do menu hambúrguer em telas pequenas */
+    #btn-menu {
+        display: block; /* Torna visível o botão hambúrguer */
+    }
+
+    /* Exibe o menu mobile quando a classe "active" for adicionada */
+    .menu-mobile.active {
+        display: block; /* Torna visível o menu mobile */
+    }
+
+    /* Exibe a sobreposição (overlay) quando o menu estiver aberto */
+    .overlay-menu.active {
+        display: block; /* Torna visível a sobreposição */
+    }
+
+    /* Estilos para o botão do menu hambúrguer (ícone) */
+    #btn-menu i {
+        font-size: 30px;  /* Tamanho do ícone do hambúrguer */
+    }
+}
+
+/* Fim da responsividade */
+
+
+}
+
+body {
+    background-image: url('img/background1.png');
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Define a altura da página como 100% da altura da janela de visualização */
+    font-size: 25px; 
+    justify-content: space-around;
+    background-color: #f9f9f9; /* Define a cor de fundo do body como cinza claro */
+    background-size: cover; /* Define que a imagem seja redimensionada para o tamanho do container */
+    background-position: center; /* Centraliza a imagem no centro do container */
+    
+}
+
+/* Estilo inicial para os textos (fora da tela) */
+/* Definindo a animação para os elementos visíveis */
+.slide-in {
+    opacity: 0;
+    transform: translateX(-50px); /* Desliza de 50px para a esquerda */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Quando o elemento se torna visível */
+.slide-in.visible {
+    opacity: 1;
+    transform: translateX(0); /* Move o elemento para a posição original */
+}
+
+
+/* Efeito de slide-in da esquerda */
+@keyframes slide-in-left {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Efeito de slide-in da direita */
+  @keyframes slide-in-right {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Classe de animação para elementos que entram da esquerda */
+  .slide-in.left {
+    animation: slide-in-left 1s ease-out forwards;
+  }
+  
+  /* Classe de animação para elementos que entram da direita */
+  .slide-in.right {
+    animation: slide-in-right 1s ease-out forwards;
+  }
+
+  
+.interface {
+    max-width: 1280px; /* Limita a largura máxima da interface a 1280px */
+    margin: 0 auto; /* Centraliza a interface horizontalmente */
+}
+
+.flex {
+    display: flex; /* Usa o layout Flexbox */
+}
+
+.btn-contato button {
+    padding: 10px 40px; /* Define o preenchimento do botão */
+    font-size: 18px; /* Define o tamanho da fonte */
+    font-weight: 600; /* Define a espessura da fonte */
+    background-color: #ffffff; /* Define a cor de fundo do botão como verde neon */
+    border: 0; /* Remove a borda */
+    border-radius: 30px; /* Define o raio da borda para arredondar os cantos */
+    cursor: pointer; /* Muda o cursor para uma mãozinha ao passar sobre o botão */
+    transition: .2s; /* Adiciona uma transição suave em 0.2 segundos */
+}
+
+h2.titulo {
+    color: #fff; /* Define a cor do texto do título como branco */
+    font-size: 38px; /* Define o tamanho da fonte do título */
+    text-align: center; /* Centraliza o texto */
+}
+
+h2.titulo span {
+    color: #00a2ff; /* Define a cor do texto dentro da tag <span> como verde neon */
+}
+
+button:hover,
+form .btn-enviar input:hover {
+    box-shadow: 0px 0px 20px #00c3ff; /* Adiciona uma sombra ao botão ao passar o mouse */
+    transform: scale(1.05); /* Aumenta o tamanho do botão ao passar o mouse */
+}
+
+/* ESTILO DO CABEÇALHO */
+header {
+    padding: 1px 4%; /* Define o preenchimento do cabeçalho */
+    background-color: #000000ce;
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0; /* Posiciona o cabeçalho no topo */
+    left: 0; /* Alinha o cabeçalho à esquerda */
+    width: 100%; /* Faz o cabeçalho ocupar toda a largura da tela */
+    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
+}
+
+/* Para ajustar o conteúdo abaixo do cabeçalho fixo */
+body {
+    padding-top: 80px; /* Ajusta o espaçamento superior do corpo para evitar que o conteúdo fique escondido atrás do cabeçalho */
+}
+
+header>.interface {
+    display: flex; /* Usa o layout Flexbox */
+    align-items: center; /* Alinha os itens verticalmente no centro */
+    justify-content: space-between; /* Espaça os itens igualmente nas extremidades */
+}
+
+header a {
+    color: #ffffff; /* Define a cor do link como cinza */
+    text-decoration: none; /* Remove o sublinhado do link */
+    display: inline-block; /* Faz o link se comportar como um bloco */
+    transition: .2s; /* Adiciona uma transição suave */
+}
+
+header nav.menu-desktop a:hover {
+    color: #00aeff; /* Muda a cor do link para branco ao passar o mouse */
+    transform: scale(1.10); /* Aumenta o tamanho do link ao passar o mouse */
+}
+
+header nav ul {
+    list-style-type: none; /* Remove as bolinhas ou números das listas */
+}
+
+header nav.menu-desktop ul li {
+    display: inline-block; /* Exibe os itens da lista na mesma linha */
+    padding: 0 50px; /* Adiciona espaço entre os itens da lista */
+}
+
+/* ESTILO DO MENU MOBILE */
+
+.btn-abrir-menu{
+    display: none; /* Oculta o botão de abrir menu por padrão */
+}
+
+.btn-abrir-menu i{
+    color: #00e1ff; /* Define a cor do ícone do menu como verde neon */
+    font-size: 40px; /* Define o tamanho do ícone */
+}
+
+.menu-mobile{
+    background-color: #000; /* Define o fundo do menu como preto */
+    height: 100vh; /* Define a altura do menu como 100% da altura da janela */
+    position: fixed; /* Faz com que o menu seja fixo na tela */
+    top: 0; /* Define a posição superior do menu */
+    right: 0; /* Define a posição direita do menu */
+    z-index: 99999; /* Define um valor alto para o z-index, colocando o menu sobre outros elementos */
+    width: 0%; /* Inicialmente o menu tem 0% de largura */
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse o tamanho do menu */
+    transition: .5s; /* Transição suave de 0.5 segundos */
+}
+
+.menu-mobile.abrir-menu{
+    width: 70%; /* Quando o menu for aberto, ele terá 70% da largura da tela */
+}
+
+.menu-mobile.abrir-menu ~ .overlay-menu{
+    display: block; /* Exibe o overlay (camada semi-transparente) quando o menu estiver aberto */
+}
+
+.menu-mobile .btn-fechar{
+    padding: 20px 5%; /* Adiciona preenchimento ao botão de fechar */
+}
+
+.menu-mobile .btn-fechar i{
+    color: #00e1ff; /* Define a cor do ícone de fechar como verde neon */
+    font-size: 30px; /* Define o tamanho do ícone de fechar */
+}
+
+.menu-mobile nav ul{
+    text-align: right; /* Alinha os itens da lista à direita */
+}
+
+.menu-mobile nav ul li a{
+    color: #fff; /* Define a cor dos links no menu como branco */
+    font-size: 20px; /* Define o tamanho da fonte dos links */
+    font-weight: 300; /* Define a espessura da fonte */
+    padding: 20px 8%; /* Adiciona preenchimento aos links */
+    display: block; /* Faz com que os links sejam exibidos como blocos */
+}   
+
+.menu-mobile nav ul li a:hover{
+    background-color: #00c3ff; /* Muda a cor de fundo para verde neon ao passar o mouse */
+    color: #000; /* Muda a cor do texto para preto */
+}
+
+.overlay-menu{
+    background-color: #000000df; /* Define a cor do fundo do overlay como preto semi-transparente */
+    width: 100%; /* Faz o overlay cobrir toda a tela */
+    height: 100%; /* Faz o overlay cobrir toda a tela */
+    position: fixed; /* Faz o overlay ser fixo na tela */
+    top: 0; /* Define a posição superior do overlay */
+    left: 0; /* Define a posição à esquerda do overlay */
+    z-index: 88888; /* Coloca o overlay sobre outros elementos, mas abaixo do menu */
+    display: none; /* Inicialmente o overlay está oculto */
+}
+/* ESTILO DO TOPO DO SITE */
+section.topo-do-site {
+    padding: 40px 4%; /* Define o preenchimento do topo do site */
+}
+
+section.topo-do-site .flex {
+    align-items: center; /* Alinha os itens verticalmente no centro */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    gap: 90px; /* Adiciona um espaço de 90px entre os itens */
+}
+
+.topo-do-site h1 {
+    color: #fff; /* Define a cor do título como branco */
+    font-size: 42px; /* Define o tamanho da fonte do título */
+    line-height: 40px; /* Define o espaçamento entre as linhas do título */
+    box-shadow: 0px 0px 10px #00e1ff;
+    border-radius: 30px;
+    background-color: #000000ad;
+    padding: 20px;
+    
+}
+
+.topo-do-site .txt-topo-site h1 span {
+    color: #00e1ff; /* Define a cor do texto dentro da tag <span> como verde neon */
+    font-weight: 700; /* Define a espessura da fonte do texto */
+    
+}
+
+.topo-do-site .txt-topo-site p {
+    color: #fff; /* Define a cor do parágrafo como branco */
+    margin: 40px 0; /* Adiciona uma margem de 40px no topo e no fundo do parágrafo */
+}
+
+
+
+.topo-do-site .img-topo-site img {
+    position: relative; /* Faz a imagem ter uma posição relativa em relação ao seu contêiner */
+    animation: flutuar 1.5s ease-in-out infinite alternate; /* Aplica a animação flutuar à imagem */
+
+}
+
+@keyframes flutuar {
+    0% {
+        top: 0; /* No início da animação, a posição vertical é 0 */
+    }
+
+    100% {
+        top: 40px; /* No final da animação, a posição vertical vai para 30px */
+    }
+}
+
+/* ESTILO DOS PRODUTOS */
+section.especiliadades {
+    padding: 40px 4%; /* Define o preenchimento da seção de especialidades */
+    justify-content: space-around;
+    
+    
+    
+}
+
+section.especiliadades .flex {
+    gap: 100px; /* Adiciona um espaço de 60px entre os itens */
+    
+    
+}
+
+.especiliadades .especialidades-box {
+    color: #fff; /* Define a cor do texto da caixa de especialidades como branco */
+    padding: 40px; /* Adiciona 40px de preenchimento nas caixas */
+    border-radius: 20px; /* Define a borda das caixas com raio de 20px (bordas arredondadas) */
+    margin-top: 45px; /* Adiciona uma margem de 45px no topo das caixas */
+    transition: .2s; /* Aplica uma transição suave de 0.2s */
+    background-color: #000000c5;
+    justify-content: center
+    
+}
+
+.especiliadades .especialidades-box:hover {
+    transform: scale(1.05); /* Aumenta a escala da caixa em 5% ao passar o mouse */
+    box-shadow: 0 0 20px #00c3ff; /* Aplica uma sombra suave de cor branca com opacidade ao passar o mouse */
+    cursor: pointer; /* Muda o cursor para a mãozinha ao passar sobre o botão */
+    transition: .2s; /* Aplica uma transição suave de 0.2s */
+    
+}
+
+.especiliadades .especialidades-box i {
+    font-size: 70px; /* Define o tamanho do ícone dentro da caixa como 70px */
+    color: #00c3ff; /* Define a cor do ícone como verde neon */
+    
+}
+
+.especiliadades .especialidades-box h3 {
+    font-size: 28px; /* Define o tamanho da fonte do título da especialidade */
+    margin: 15px 0; /* Adiciona uma margem de 15px no topo e no fundo do título */
+    
+}
+
+/* ESTILO DO SOBRE */
+section.sobre {
+    padding: 80px 4%; /* Define o preenchimento da seção sobre */
+    display: flex; /* Faz o conteúdo da seção sobre ser exibido como um flexbox */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    align-items: center; /* Alinha os itens verticalmente no centro */
+    gap: 60px; /* Adiciona um espaço de 60px entre os itens */
+    box-shadow: 0px 0px 10px 10px #00e1ff;
+    border-radius: 20px;
+    background-color: #00000000;
+}
+
+section.sobre .flex {
+    display: flex; /* Flexbox para disposição dos itens */
+    align-items: center; /* Alinha os itens verticalmente no centro */
+    gap: 60px; /* Adiciona um espaço de 60px entre os itens */
+    box-shadow: 0px 0px 10px 10px #00d9ff;
+    border-radius: 20px;
+    background-color: #000000e7;
+    padding: 8px;
+    justify-content: center;
+    text-align: center;
+}
+
+.sobre .txt-sobre {
+    color: #fff; /* Cor do texto */
+    max-width: 800px; /* Limita a largura do texto */
+    text-align: justify; /* Justifica o texto */
+}
+
+.sobre .txt-sobre h2 {
+    font-size: 40px; /* Tamanho da fonte do título */
+    line-height: 40px;
+    margin-bottom: 30px; /* Espaçamento inferior */
+}
+
+.sobre .txt-sobre h2 span {
+    color: #00c3ff; /* Cor do texto no span */
+    display: block; /* Faz o span se comportar como bloco */
+}
+
+.sobre .txt-sobre p {
+    margin: 20px 0; /* Margem no topo e fundo do parágrafo */
+    text-align: justify; /* Alinha o texto de forma justificada */
+}
+
+.btn-social button {
+    width: 60px; /* Largura do botão social */
+    height: 60px; /* Altura do botão social */
+    border-radius: 50%; /* Borda circular */
+    border: none;
+    background-color: #00c3ff; /* Cor do botão */
+    font-size: 22px; /* Tamanho do ícone no botão */
+    cursor: pointer; /* Cursor em forma de mão */
+    margin: 0 5px; /* Margem entre os botões */
+    transition: .2s; /* Transição suave */
+}
+
+
+/* ESTILO DO FORMULÁRIO DE CONTATO */
+section.formulario {
+    padding: 80px 4%; /* Define o preenchimento da seção de formulário de contato */
+    box-shadow: 0 0 30px 10px #00c3ff;
+}
+
+form {
+    max-width: 500px; /* Define a largura máxima do formulário */
+    margin: 0 auto; /* Centraliza o formulário horizontalmente */
+
+    background-color: #91919194; /* Define a cor de fundo do formulário como cinza claro */
+    border-radius: 15px; /* Define bordas arredondadas ao formulário */
+    padding: 20px; /* Define o preenchimento interno do formulário */
+    text-align: center; /* Centraliza o texto dentro do formulário */
+    box-shadow: 0px 0px 10px 10px #00ccff;
+    display: flex; /* Torna o formulário um contêiner flexível */
+    justify-content: center; /* Centraliza os itens dentro do formulário */
+    flex-direction: column; /* Organiza os itens de forma vertical */
+    gap: 10px; /* Adiciona um espaço de 10px entre os itens */
+    margin-top: 40px; /* Adiciona uma margem no topo do formulário */
+
+}
+
+form input,
+form textarea {
+    width: 100%; /* Define que os campos de entrada e área de texto ocupem toda a largura disponível */
+    background-color: #f0f0f0; /* Define a cor de fundo como cinza escuro */
+    border: 0; /* Remove a borda dos campos */
+    padding: 20px 20px; /* Define o preenchimento interno dos campos */
+    border-radius: 15px; /* Define bordas arredondadas nos campos */
+    color: #ffffff; /* Define a cor do texto como branco */
+    font-size: 18px; /* Define o tamanho da fonte dentro dos campos */
+    background-color: #000000cb;
+    box-shadow: #00a2ff;
+}
+
+form textarea {
+    resize: none; /* Impede que a área de texto seja redimensionada */
+    max-height: 200px; /* Define a altura máxima da área de texto */
+    padding: auto;
+    
+    
+}
+
+form .btn-enviar {
+    margin-top: 20px; /* Adiciona uma margem no topo do botão de envio */
+    text-align: center; /* Centraliza o botão de envio */
+}
+
+form .btn-enviar input {
+    width: 120px; /* Define a largura do botão de envio */
+    background-color: #000000;/* Define a cor de fundo do botão como verde neon */
+    color: #ffffff; /* Define a cor do texto do botão como preto */
+    font-weight: 700; /* Define o peso da fonte do botão como 700 */
+    cursor: pointer; /* Muda o cursor para a mãozinha ao passar sobre o botão */
+    transition: .2s; /* Aplica uma transição suave de 0.2s */
+}
+#mensagem-feedback {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    opacity: 0; /* Inicia invisível */
+    visibility: hidden; /* Inicialmente invisível */
+    background-color: #00000096; /* Cor de fundo cinza escuro com transparência */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transição suave */
+}
+
+#mensagem-feedback.mostrar {
+    opacity: 1; /* Torna a mensagem visível */
+    visibility: visible; /* Torna a mensagem visível */
+}
+
+#mensagem-feedback p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+
+/* ESTILO DO RODAPÉ */
+footer {
+    padding: 40px 4%; /* Define o preenchimento do rodapé */
+    box-shadow: 0 0 10px 3px #00c3ff; /* Aplica uma sombra ao redor do rodapé */
+}
+
+footer .flex {
+    justify-content: space-between; /* Distribui os itens do rodapé de forma espaçada */
+}
+
+footer .line-footer {
+    padding: 20px 0; /* Adiciona um preenchimento no topo e no fundo das linhas do rodapé */
+}
+
+.borda {
+    border-top: 2px solid #00c3ff; /* Adiciona uma borda superior verde neon */
+}
+
+footer .line-footer p i {
+    color: #00c3ff;/* Define a cor do ícone como verde neon */
+    font-size: 22px; /* Define o tamanho do ícone como 22px */
+}
+
+footer .line-footer p a {
+    color: #fff; /* Define a cor do link como branco */
+}
+
+/* MEDIA QUERY PARA ADAPTAR O DESIGN A TELAS PEQUENAS */
+@media screen and (max-width: 1020px) {
+
+    /* CLASSES GERAIS */
+    .flex {
+        flex-direction: column; /* Organiza os itens em uma coluna em telas menores */
+    }
+
+    .topo-do-site .flex{
+        flex-direction: column-reverse; /* Inverte a ordem dos itens no topo em telas menores */
+    }
+
+    h2.titulo {
+        font-size: 34px; /* Diminui o tamanho da fonte do título */
+        line-height: 30px; /* Diminui o espaçamento entre as linhas do título */
+    }
+
+    /* CABEÇALHO */
+    .menu-desktop,
+    .btn-contato {
+        display: none; /* Oculta o menu desktop e o botão de contato em telas pequenas */
+
+    }
+}
+/* TOPO DO SITE */
+section.topo-do-site .flex {
+    gap: 40px; /* Adiciona um espaço de 40px entre os itens dentro do contêiner flexível */
+}
+
+section.topo-do-site {
+    padding: 20px 8%; /* Define um preenchimento de 20px no topo e no fundo, e 8% nas laterais */
+}
+
+
+.topo-do-site .img-topo-site img {
+    width: 100%; /* Define que a imagem no topo deve ocupar toda a largura disponível */
+}
+
+/* ESPECIALIDADES */
+section.especiliadades {
+    padding: 40px 8%; /* Define o preenchimento de 40px no topo e no fundo, e 8% nas laterais */
+}
+
+/* SOBRE */
+section.sobre {
+    padding: 80px 8%; /* Define o preenchimento de 80px no topo e no fundo, e 8% nas laterais */
+    
+}
+
+.sobre .txt-sobre h2 {
+    font-size: 34px; /* Define o tamanho da fonte do subtítulo na seção "Sobre" */
+    line-height: 35px; /* Define a altura da linha do subtítulo */
+    text-align: center; /* Centraliza o texto do subtítulo */
+}
+
+.btn-social{
+    text-align: center; /* Centraliza os botões sociais */
+}
+
+.img-sobre img{
+    width: 100%; /* Define que a imagem na seção "Sobre" deve ocupar toda a largura disponível */
+}
+
+
+.img-port {
+    width: 100%; /* Define que as imagens do portfólio ocupem toda a largura disponível */
+    max-width: 360px; /* Define a largura máxima das imagens como 360px */
+    margin: 0 auto; /* Centraliza as imagens horizontalmente */
+}
+
+
+/* RODAPÉ */
+footer .flex {
+    flex-direction: column; /* Organiza os itens do rodapé em uma coluna */
+    gap: 30px; /* Adiciona um espaço de 30px entre os itens do rodapé */
+}
+
+footer .line-footer {
+    text-align: center; /* Centraliza os itens dentro da linha do rodapé */
+}

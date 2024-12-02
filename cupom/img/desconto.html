@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Sorte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #05004e;
+            color: #000000;
+            padding: 100px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgb(0, 217, 255);
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 2px 1px 8px rgb(0, 238, 255);
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #000000;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: center;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 80%;
+            padding: 15px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            color: #ffffff;
+            background: rgba(0, 12, 82, 0.466);
+            box-shadow: #1900ff;
+        }
+        .form-group button {
+            display: block;
+            width: 50%;
+            margin: 0 auto;
+            margin-top: 15px;
+            border: none;
+            color: #fff;
+            background: #464646;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px;
+            transition: background 0.3s ease-in-out;
+            text-shadow: 2px 2px 4px rgb(0, 0, 0);
+        }
+        .form-group button:hover {
+            background: #100192;
+            transition: background 0.3s ease-in-out;
+            text-shadow: 1px 1px 4px rgb(0, 0, 0);
+            box-shadow: 1px 1px 14px rgb(255, 255, 255);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            opacity: 0.9;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .result.active {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+        @media (max-width: 600px) {
+            .form-group input, .form-group button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Jogo da Sorte</h1>
+    <div class="form-container">
+        <h2>Defina seu valor e jogue!</h2>
+        <form id="gameForm">
+            <div class="form-group">
+                <label for="value">Valor da compra:</label>
+                <input type="text" id="value" placeholder="Digite o serviço">
+            </div>
+            <div class="form-group">
+                <label for="price">Quanto você deseja pagar:</label>
+                <input type="number" id="price" placeholder="Digite o valor do produto" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Escolha seis números (separados por vírgula):</label>
+                <input type="text" id="numbers" placeholder="Digite 6 números entre 1 e 100">
+            </div>
+            <div class="form-group">
+                <button type="button" id="verifyButton">Verificar Sorte</button>
+            </div>
+        </form>
+        <div class="result" id="resultMessage"></div>
+    </div>
+
+    <script>
+        // Cupons disponíveis
+        const coupons = {
+            "15": ["A7B2F3", "P9Q5G6", "W2H8K4", "R3T1M7", "Z6N4J2"], // Cupons para 15%
+            "30": ["L5V9B1", "X7C3Y4", "S2A8W1", "Q6D4P5", "M1F7L9"], // Cupons para 30%
+            "45": ["T4U7D1", "C8P9H2", "N3L4R5", "B2V6X8", "F1Q7T3"]  // Cupons para 45%
+        };
+        
+        // Números armazenados no sistema
+        const storedNumbers = [4, 12, 89];
+
+        // Referências aos elementos do DOM
+        const resultMessage = document.getElementById('resultMessage');
+        const verifyButton = document.getElementById('verifyButton');
+
+        // Função para verificar os números
+        verifyButton.addEventListener('click', () => {
+            const numbersValue = document.getElementById('numbers').value;
+            const price = parseFloat(document.getElementById('price').value);
+            const value = document.getElementById('value').value;
+
+            // Validação básica dos campos
+            if (!numbersValue || !price || isNaN(price) || price <= 0) {
+                resultMessage.innerText = "Por favor, preencha todos os campos corretamente.";
+                resultMessage.style.color = "red";
+                return;
+            }
+
+            // Processar os números escolhidos
+            const chosenNumbers = numbersValue.split(',').map(num => parseInt(num.trim()));
+            if (chosenNumbers.some(num => isNaN(num) || num < 1 || num > 100)) {
+                resultMessage.innerText = "Digite números válidos entre 1 e 100, separados por vírgula.";
+                resultMessage.style.color = "red";
+                return;
+            }
+
+            // Verificar acertos
+            const matchedNumbers = chosenNumbers.filter(num => storedNumbers.includes(num));
+
+            // Se não houver mais cupons disponíveis
+            if (Object.values(coupons).every(arr => arr.length === 0)) {
+                resultMessage.innerText = "Os cupons estão esgotados. Tente novamente mais tarde.";
+                resultMessage.style.color = "red";
+                return;
+            }
+
+            // Se houver acertos, calcular o desconto e escolher o cupom
+            if (matchedNumbers.length > 0) {
+                let discountPercentage = 0;
+                let couponCategory = "";
+
+                // Definir o percentual de desconto com base nos acertos
+                if (matchedNumbers.length === 1) {
+                    discountPercentage = 15;
+                    couponCategory = "15";
+                } else if (matchedNumbers.length === 2) {
+                    discountPercentage = 30;
+                    couponCategory = "30";
+                } else if (matchedNumbers.length >= 3) {
+                    discountPercentage = 45;
+                    couponCategory = "45";
+                }
+
+                // Obter um cupom da categoria correspondente
+                const coupon = coupons[couponCategory].pop(); // Remove o cupom da lista
+                const discountedPrice = price - (price * discountPercentage / 100);
+                resultMessage.innerHTML = `
+                    Parabéns! Você acertou os números: ${matchedNumbers.join(', ')}.<br>
+                    Você ganhou ${discountPercentage}% de desconto.<br>
+                    O novo valor é: R$ ${discountedPrice.toFixed(2)}.<br>
+                    Seu cupom de desconto é: <strong>${coupon}</strong>
+                `;
+                resultMessage.style.color = "white";
+            } else {
+                resultMessage.innerHTML = `Infelizmente, você não acertou nenhum número.<br>O valor permanece o mesmo: R$ ${price.toFixed(2)}.`;
+                resultMessage.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

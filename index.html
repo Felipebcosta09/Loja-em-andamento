@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="menu.js" defer></script>
+    <title>Loja A3</title>
+</head>
+<body>
+
+    <header>
+        <div class="interface">
+            <div class="logo">
+                <a href="#">
+                    <img src="img/logo.png" alt="Logo" style="width: 150px; height: 150px;">
+                </a>
+            </div>
+    
+            <nav class="menu-desktop">
+                <ul>
+                    <li><a href="#topo-do-site">Início</a></li>
+                    <li><a href="produtos/index.html" target="_blank">Produtos</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="https://api.whatsapp.com/send?phone=5521970124760" target="_blank">Contato</a></li>
+                    <li><a href="produtos/carrinho/index.html" target="_blank"><i class="bi bi-cart"></i></a></li>
+                </ul>
+            </nav>
+    
+            <div class="btn-contato">
+                <a href="https://api.whatsapp.com/send?phone=5521970124760" target="_blank">
+                    <button>Contato</button>
+                </a>
+            </div>
+    
+            <div class="btn-abrir-menu" id="btn-menu">
+                <i class="bi bi-list"></i>
+            </div>
+    
+            <div class="menu-mobile" id="menu-mobile">
+                <div class="btn-fechar">
+                    <i class="bi bi-x-lg"></i>
+                </div>
+    
+                <nav>
+                    <ul>
+                        <li><a href="#topo-do-site">Início</a></li>
+                        <li><a href="produtos/index.html" target="_blank">Produtos</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="https://api.whatsapp.com/send?phone=5521970124760" target="_blank">Contato</a></li>
+                        <li><a href="carrinho/index.html" target="_blank"><i class="bi bi-cart"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+    
+            <div class="overlay-menu" id="overlay-menu"></div>
+        </div>
+    </header>
+    
+
+    <main>
+        <section class="topo-do-site" id="topo-do-site"> 
+            <div class="interface">
+                <div class="flex">
+                    <div class="txt-topo-site slide-in left">
+                        <h1>Compre com o melhor custo benefício do mercado<span>.</span></h1>
+                        <p>Até 45% de desconto em sua compra</p>
+                        <div class="btn-contato">
+                            <a href="cupom\desconto.html" target="_blank">
+                                <button>Resgate seu desconto</button>
+                            </a>
+                        </div>
+                    </div>
+            
+                    <div class="img-topo-site slide-in right">
+                        <img src="img\mouse azul.png" alt="mouse">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="especiliadades" >
+            <div class="interface">
+                <h2 class="titulo">NOSSOS <span>PRODUTOS.</span></h2>
+                <div class="flex">
+                    <div class="especialidades-box">
+                        <i class="bi bi-display"></i>
+                        <h3>Monitores</h3>
+                        <p>Temos monitores da melhor quaidade.</p>
+                    </div>
+
+                    <div class="especialidades-box">
+                        <i class="bi bi-mouse2"></i>
+                        <h3>Periféricos</h3>
+                        <p> Teclados  e mouses com vários botões disponíveis.</p>
+                    </div>
+
+                    <div class="especialidades-box">
+                        <i class="bi bi-pc-display-horizontal"></i>
+                        <h3>Notebooks</h3>
+                        <p>Notebooks desde básicos a gamers</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sobre" id="sobre">
+            <div class="interface">
+                <div class="flex">
+                    <div class="txt-sobre">
+                        <h2>MUITO PRAZER, <span>Somos Dev Imports.</span></h2>
+                        <p>Bem-vindo à Dev Imports – Tecnologia de Ponta ao Seu Alcance!
+                            Na Dev Imports, nossa missão é trazer o que há de melhor em tecnologia para sua casa, escritório ou setup gamer. Especializados em periféricos, monitores de alta performance e notebooks modernos, oferecemos produtos de qualidade que atendem às suas necessidades, sejam elas trabalho, estudo ou diversão.
+                            Com um portfólio cuidadosamente selecionado, buscamos aliar inovação, desempenho e custo-benefício. Trabalhamos com marcas renomadas e garantimos uma experiência de compra confiável e prática, com atendimento dedicado e suporte técnico para tirar suas dúvidas.
+                            Explore nossa loja e descubra a tecnologia que vai transformar o sua vida!</p>
+        
+                        <div class="btn-social">
+                            <a href="https://www.instagram.com/felipe_devbr?igsh=MWwwYW9qZzNib3F4NA==" target="_blank"><button><i class="bi bi-instagram"></i></button></a>
+                            <a href="https://api.whatsapp.com/send?phone=5521970124760" target="_blank"><button><i class="bi bi-whatsapp"></i></button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="formulario">
+            <div class="interface">
+                <h2 class="titulo">ENTRE EM <span>CONTATO</span></h2>
+        
+                <form action="">
+                    <input type="text" name="nome" id="nome" placeholder="Seu nome completo:" required 
+                           pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" 
+                           title="Por favor, insira apenas letras.">
+        
+                    <input type="email" name="email" id="email" placeholder="Seu e-mail:" required>
+        
+                    <input type="tel" name="celular" id="celular" placeholder="Seu celular:" required 
+                           pattern="[0-9]+" 
+                           title="Por favor, insira apenas números.">
+        
+                    <textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required></textarea>
+        
+                    <div class="btn-enviar">
+                        <input type="submit" value="ENVIAR">
+                    </div>
+                </form>
+        
+                <div id="mensagem-feedback"></div>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <div class="interface">
+            <div class="line-footer">
+                <div class="flex">
+                    <div class="btn-social">
+                        <a href="https://www.instagram.com/felipe_devbr?igsh=MWwwYW9qZzNib3F4NA==" target="_blank"><button><i class="bi bi-instagram"></i></button></a>
+                        <a href="https://api.whatsapp.com/send?phone=5521970124760" target="_blank"><button><i class="bi bi-whatsapp"></i></button></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="line-footer borda">
+                <p><i class="bi bi-envelope-fill" target="_blank"></i> <a href="mailto:">dev1mp0rtsss@gmail.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
